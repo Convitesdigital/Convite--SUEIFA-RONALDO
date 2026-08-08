@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Convite de Casamento - Michaela & Ronaldo</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #0f0f0f;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        /* Container principal do convite (estilo mobile frame responsivo) */
+        #invite-container {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            height: 100dvh;
+            margin: 0 auto;
+            background: #121212;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        /* Cada tela do convite */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 25px 20px;
+            z-index: 1;
+        }
+
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* Controlos de Música Flutuantes */
+        #music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #d4af37;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            color: #d4af37;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        #music-control.playing {
+            animation: pulse-music 2s infinite;
+        }
+        @keyframes pulse-music {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        /* Indicador de Rodapé / Setas */
+        .footer-nav {
+            text-align: center;
+            padding: 15px 0 5px 0;
+            cursor: pointer;
+            flex-shrink: 0;
+            z-index: 20;
+        }
+        .footer-nav i {
+            color: #ffffff;
+            font-size: 20px;
+            animation: bounce-arrow 1.5s infinite;
+        }
+        @keyframes bounce-arrow {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+
+        /* Cores e Tipografias específicas */
+        .gold-text {
+            color: #e5c158;
+            font-family: 'Great Vibes', cursive;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Estilos específicos por tela baseados nas imagens */
+
+        /* TELA 1 */
+        .screen-1 {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('Fotografias164.jpg') center/cover no-repeat;
+            text-align: center;
+            justify-content: space-between;
+        }
+        .screen-1 .header-title {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #f3d79f;
+            text-transform: uppercase;
+        }
+        .screen-1 .header-subtitle {
+            font-size: 45px;
+            color: #f3d79f;
+            margin-top: -10px;
+        }
+        .screen-1 .couple-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 32px;
+            color: #ffffff;
+            line-height: 1.3;
+            margin: auto 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+        .rings-icon {
+            width: 60px;
+            margin: 10px auto;
+            display: block;
+        }
+        .btn-open {
+            background-color: #f4cf83;
+            color: #1a1a1a;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(244, 207, 131, 0.4);
+            transition: transform 0.2s;
+            margin: 15px auto;
+        }
+        .btn-open:active {
+            transform: scale(0.95);
+        }
+
+        /* TELA 2 */
+        .screen-2 {
+            background: #d8c9b4 url('Fotografias53.jpg') center/cover no-repeat;
+            position: relative;
+        }
+        .screen-2::before {
+            content: '';
+            position: absolute;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(220, 215, 205, 0);
+            z-index: 1;
+        }
+        .screen-2 > * { z-index: 2; position: relative; }
+        .welcome-card {
+            background: #f7e3be;
+            border-radius: 150px 150px 20px 20px;
+            padding: 40px 20px 30px 20px;
+            text-align: center;
+            margin-top: auto;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
+        }
+        .welcome-card h2 {
+            font-size: 38px;
+            color: #1a1a1a;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .welcome-card p {
+            font-size: 18px;
+            color: #333;
+            font-weight: 400;
+        }
+
+        /* TELA 3 */
+        .screen-3 {
+            background: #ffffff;
+            color: #1a1a1a;
+            text-align: center;
+            padding-top: 30px;
+        }
+        .screen-3 img.top-photo {
+            width: 100%;
+            max-height: 35vh;
+            object-fit: cover;
+            border-radius: 0 0 150px 150px;
+            margin-bottom: 20px;
+        }
+        .screen-3 h3 {
+            font-size: 26px;
+            font-weight: 700;
+            margin: 10px 0;
+            letter-spacing: 1px;
+        }
+        .screen-3 .family-text {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        /* TELA 4 */
+        .screen-4 {
+            background: #fdfbf7;
+            color: #1a1a1a;
+            text-align: center;
+            justify-content: space-between;
+        }
+        .screen-4 .quote-box {
+            background: #ffffff;
+            padding: 25px 15px;
+            border-radius: 0 0 150px 150px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .screen-4 p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .screen-4 img.bottom-photo {
+            width: 100%;
+            height: 45vh;
+            object-fit: cover;
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* TELA 5 */
+        .screen-5 {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('Fotografias113.jpg') center/cover no-repeat;
+            text-align: center;
+            color: #ffffff;
+            justify-content: space-between;
+        }
+        .screen-5 .invitation-text {
+            font-size: 15px;
+            line-height: 1.6;
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            margin: auto 0;
+        }
+
+        /* TELA 6 */
+        .screen-6 {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('Fotografias53.jpg') center/cover no-repeat;
+            text-align: center;
+            color: #ffffff;
+            justify-content: space-between;
+        }
+        .screen-6 .big-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 38px;
+            color: #f4cf83;
+            margin-top: 10px;
+        }
+        .screen-6 .date-subtitle {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        .event-card {
+            background: rgba(180, 150, 100, 0.35);
+            border: 1px solid rgba(244, 207, 131, 0.5);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+            margin: 10px 0;
+        }
+        .event-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .event-card p {
+            font-size: 13px;
+            margin-bottom: 10px;
+            color: #f0f0f0;
+        }
+        .btn-location {
+            background-color: #f4cf83;
+            color: #1a1a1a;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* TELA 7 (RSVP) */
+        .screen-7 {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('Fotografias100.jpg') center/cover no-repeat;
+            justify-content: flex-start;
+            overflow-y: auto;
+            padding-bottom: 30px;
+        }
+        .screen-7 .top-info {
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            color: #f0f0f0;
+        }
+        .rsvp-form-card {
+            background: #ffffff;
+            color: #1a1a1a;
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .rsvp-form-card h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #b8860b;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .rsvp-form-card h2 {
+            font-size: 20px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #444;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Montserrat', sans-serif;
+            outline: none;
+            background: #fafafa;
+        }
+        .btn-whatsapp {
+            width: 100%;
+            background-color: #1b3022;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+        .btn-whatsapp:hover {
+            background-color: #24422e;
+        }
+        .rsvp-note {
+            font-size: 11px;
+            text-align: center;
+            color: #666;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        /* TELA 8 */
+        .screen-8 {
+            background: #ffffff;
+            color: #1a1a1a;
+            text-align: center;
+            justify-content: space-between;
+        }
+        .couple-split {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            height: 35vh;
+            margin-bottom: 15px;
+        }
+        .couple-split img {
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .screen-8 h2 {
+            font-size: 28px;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 5px;
+        }
+        .gold-divider {
+            width: 80px;
+            height: 3px;
+            background-color: #f4cf83;
+            margin: 0 auto 15px auto;
+        }
+        .screen-8 p {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #444;
+            margin-bottom: 8px;
+            text-align: left;
+            padding: 0 5px;
+        }
+
+        /* TELAS 9, 10, 11, 12 (Código de Vestimenta) */
+        .screen-dress {
+            background: #e5e5e5;
+            color: #1a1a1a;
+            text-align: center;
+            justify-content: space-between;
+            padding-top: 30px;
+        }
+        .dress-title-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px; 
+        }
+        .dress-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        .color-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 10px 0;
+            margin: auto 0;
+        }
+        .color-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+            padding: 0 10px;
+        }
+        .color-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .color-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #111;
+            line-height: 1.2;
+        }
+        .double-circle {
+            position: relative;
+            width: 35px;
+            height: 35px;
+        }
+        .double-circle .c1 {
+            position: absolute;
+            top: 0; left: 0; width: 25px; height: 25px; border-radius: 50%; background: #000;
+        }
+        .double-circle .c2 {
+            position: absolute;
+            bottom: 0; right: 0; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 1px solid #ccc;
+        }
+
+        /* TELA 13 */
+        .screen-13 {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('Fotografias100.jpg') center/cover no-repeat;
+            text-align: center;
+            color: #ffffff;
+            justify-content: space-between;
+        }
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        .countdown-box {
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #f4cf83;
+            border-radius: 10px;
+            padding: 10px 8px;
+            min-width: 65px;
+            backdrop-filter: blur(5px);
+        }
+        .countdown-number {
+            font-size: 22px;
+            font-weight: 700;
+            color: #f4cf83;
+            font-family: 'Playfair Display', serif;
+        }
+        .countdown-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+            color: #ddd;
+        }
+        .final-message-box {
+            background: #ffffff;
+            color: #1a1a1a;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Playfair Display', serif;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin: 10px 0;
+        }
+        .final-footer-text {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #e0e0e0;
+            font-style: italic;
+            padding: 0 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Botão de Música de Fundo -->
+    <div id="music-control" onclick="toggleMusic()" title="Ligar/Desligar Música">
+        <i id="music-icon" class="fas fa-music"></i>
+    </div>
+    <!-- Áudio de Fundo (Exemplo de música romântica livre de direitos) -->
+    <audio id="bg-music" loop>
+        <source src="Nana.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="invite-container">
+
+        <!-- TELA 1 -->
+        <div class="screen screen-1 active" data-index="0">
+            <div>
+                <div class="header-title"></div>
+                <div class="header-subtitle gold-text">Casamento De</div>
+            </div>
+            <div>
+                <img src="https://img.icons8.com/color/96/wedding-rings.png" class="rings-icon" alt="Alianças">
+                <div class="couple-names">
+                    Sueifa<br>
+                    &<br>
+                    Ronaldo 
+                </div>
+                <button class="btn-open" onclick="openInvite()">ABRIR</button>
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- TELA 2 -->
+        <div class="screen screen-2" data-index="1">
+            <div style="text-align: center; padding-top: 10px;">
+                <div style="font-size: 16px; font-weight: 300; color: #555; text-transform: uppercase; letter-spacing: 2px;">Convite de</div>
+                <div style="font-size: 32px; color: #b8860b;" class="gold-text">Casamento</div>
+            </div>
+            <div class="welcome-card">
+                <h2>Bem-Vindo!</h2>
+                <p>És o nosso convidado especial.</p>
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down" style="color: #333;"></i>
+            </div>
+        </div>
+
+        <!-- TELA 3 -->
+        <div class="screen screen-3" data-index="2">
+            <div>
+                <img src="fit.jpg" class="top-photo" alt="Casal">
+                <img src="https://img.icons8.com/color/96/wedding-rings.png" style="width: 45px; margin: 0 auto 5px auto; display:block;" alt="Alianças">
+                <h3>Noivos:</h3>
+                <div style="font-size: 13px; font-weight: 600; margin-top: 8px;">Michaela Sueifa Ibraimo Arrone  </div>
+                <div class="family-text">Filha de<br>Ibraimo Arrone Rachide (Em memória) & Sadira Amade Abdul Wahabo </div>
+                <div style="font-size: 16px; margin: 4px 0; font-family:'Great Vibes', cursive; color:#b8860b;">&</div>
+                <div style="font-size: 13px; font-weight: 600;">Ronaldo Jeremias João Johana Metana</div>
+                <div class="family-text">Filho de<br>João Johana Metana (Em memória) & Sara António Zimba</div>
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down" style="color: #333;"></i>
+            </div>
+        </div>
+
+        <!-- TELA 4 -->
+        <div class="screen screen-4" data-index="3">
+            <div class="quote-box">
+                <img src="https://img.icons8.com/color/96/wedding-rings.png" style="width: 45px; margin: 0 auto 10px auto; display:block;" alt="Alianças">
+                <p>
+                    Uma união escrita por Allah, no tempo perfeito e com um propósito único. Assim nasceu a nossa história de amor.<br><br>
+                    Entre tantas histórias que existem, a nossa, sem dúvidas, será sempre a nossa preferida.
+                </p>
+            </div>
+            <div>
+                <img src="Fotografias190.jpg" class="bottom-photo" alt="Casal">
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down"></i> 
+            </div>
+        </div>
+
+        <!-- TELA 5 -->
+        <div class="screen screen-5" data-index="4">
+            <div style="text-align: center; padding-top: 10px;">
+                <img src="https://img.icons8.com/color/96/wedding-rings.png" style="width: 50px; display:block; margin: 0 auto;" alt="Alianças">
+            </div>
+            <div class="invitation-text">
+                Com a bênção de Allah e das nossas famílias, temos a honra e a alegria de convidá-lo(a) para celebrar connosco um dos momentos mais importantes das nossas vidas.<br><br>
+                Junte-se a nós para celebrar o nosso enlace matrimonial, de acordo com a programação abaixo.
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- TELA 6 -->
+        <div class="screen screen-6" data-index="5">
+            <div style="text-align: center;">
+                <img src="https://img.icons8.com/color/96/wedding-rings.png" style="width: 45px; display:block; margin: 0 auto;" alt="Alianças">
+                <div class="big-title">O Grande dia</div>
+                <div class="date-subtitle">SABÁDO | 28 DE NOVEMBRO DE 2026</div>
+            </div>
+            <div class="event-card">
+                <h4 style="text-transform: uppercase;">CERIMÓNIA DE REGISTO CIVIL (16:00H)</h4>
+                <p>Complexo Nheledzi ya Nhampossa</p>
+                <p style="font-size: 11px; font-style: italic; margin-bottom: 8px;">Clica no Botão abaixo</p>
+                <a href="https://maps.google.com/?q=Complexo+Nheledzi+ya+Nhampossa" target="_blank" class="btn-location">Local da Cerimónia</a>
+            </div>
+            <div style="font-size: 12px; line-height: 1.4; text-align: center; color: #ddd;">
+                Após a cerimónia, teremos a honra de recebê-lo(a) para o Copo d'Água, que será realizado no mesmo local.
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- TELA 7 (RSVP) -->
+        <div class="screen screen-7" data-index="6">
+            <div class="top-info">
+                Para melhor organização da celebração, pedimos a gentileza de confirmar a sua presença até ao dia 30 de Outubro de 2026, através das opções abaixo.
+            </div>
+            <div class="rsvp-form-card">
+                <h3>R.S.V.P.</h3>
+                <h2>Confirmação de Presença</h2>
+                <div class="form-group">
+                    <label>Seu Nome Completo</label>
+                    <input type="text" id="rsvp-name" placeholder="Insira seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label>Seu Contacto / Telefone</label>
+                    <input type="text" id="rsvp-phone" placeholder="Ex: +258 8X XXX XXXX">
+                </div>
+                <div class="form-group">
+                    <label>Irá comparecer?</label>
+                    <select id="rsvp-status">
+                        <option value="Sim, irei com certeza">Sim, irei com certeza</option>
+                        <option value="Infelizmente não poderei comparecer">Infelizmente não poderei comparecer</option>
+                    </select>
+                </div>
+                <button class="btn-whatsapp" onclick="sendWhatsAppRSVP()">
+                    <i class="fab fa-whatsapp"></i> CONFIRMAR VIA WHATSAPP
+                </button>
+            </div>
+            <div class="rsvp-note">
+                Nota: Este convite é intransmissível e não extensivo a crianças.
+            </div>
+            <div class="footer-nav" onclick="nextScreen()" style="padding-top: 5px;">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- TELA 8 -->
+        <div class="screen screen-8" data-index="7">
+            <div class="couple-split">
+                <img src="Fotografias113.jpg" alt="Casal">
+                <img src="Fotografias67.jpg" alt="Casal">
+            </div>
+            <div>
+                <h2>Código de Vestimenta</h2>
+                <div class="gold-divider"></div>
+                <p>Para tornar este dia ainda mais especial e harmonioso, convidamos os nossos familiares e amigos a inspirarem-se na paleta de cores cuidadosamente escolhida para a celebração.</p>
+                <p>Às senhoras, sugerimos vestidos em qualquer uma das tonalidades apresentadas, escolhendo o modelo com que se sintam mais elegantes e confortáveis.</p>
+                <p>Aos senhores, sugerimos traje formal, com liberdade para escolher a tonalidade da paleta que melhor reflita o seu estilo e conforto.</p>
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down" style="color:#333;"></i>
+            </div>
+        </div>
+
+        <!-- TELA 9 (Mulheres - Cores a Evitar) -->
+        <div class="screen screen-dress" data-index="8">
+            <div>
+                <div class="dress-title-main">Mulheres</div>
+                <div class="dress-subtitle" style="color: #b82222;"><b>CORES A EVITAR</b></div>
+            </div>
+            <div class="color-list">
+                <div class="color-item">
+                    <div class="color-circle" style="background: #ffffff; border: 1px solid #bbb;"></div>
+                    <div class="color-label">BRANCO, CHAMPANHE,<br>TONS NUDE E TONS CLAROS</div>
+                </div>
+                <div class="color-item">
+                    <div class="color-circle" style="background: #000000;"></div>
+                    <div class="color-label">PRETO</div>
+                </div>
+                <div class="color-item">
+                    <div class="color-circle" style="background: #e65c24;"></div>
+                    <div class="color-label">LARANJA</div>
+                </div>
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down" style="color:#333;"></i>
+            </div>
+        </div>
+
+        <!-- TELA 10 (Mulheres - Cores Recomendadas) -->
+        <div class="screen screen-dress" data-index="9">
+            <div>
+                <div class="dress-subtitle" style="font-size: 20px; font-weight: 700; margin-top: 10px;">CORES RECOMENDADAS</div>
+            </div>
+            <div class="color-list" style="gap: 8px;">
+                <div class="color-item"><div class="color-circle" style="background: #b88686;"></div><div class="color-label">ROSA QUEIMADO</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #8b5a2b;"></div><div class="color-label">CASTANHO CARAMELO</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #800040;"></div><div class="color-label">MARSALA</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #d91424;"></div><div class="color-label">VERMELHO ESCARLATE</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #005c42;"></div><div class="color-label">VERDE ESMERALDA ESCURO</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #193366;"></div><div class="color-label">AZUL MARINHO</div></div>
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down" style="color:#333;"></i>
+            </div>
+        </div>
+
+        <!-- TELA 11 (Homens - Cores a Evitar) -->
+        <div class="screen screen-dress" data-index="10">
+            <div>
+                <div class="dress-title-main">Homens</div>
+                <div class="dress-subtitle" style="color: #b82222;"><b>CORES A EVITAR</b></div>
+            </div>
+            <div class="color-list">
+                <div class="color-item">
+                    <div class="double-circle">
+                        <div class="c1"></div>
+                        <div class="c2"></div>
+                    </div>
+                    <div class="color-label">COMBINAÇÃO PRETO/BRANCO</div>
+                </div>
+                <div class="color-item">
+                    <div class="color-circle" style="background: #000000;"></div>
+                    <div class="color-label">FATO PRETO</div>
+                </div>
+                <div class="color-item">
+                    <div class="color-circle" style="background: #b3d9ff;"></div>
+                    <div class="color-label">FATO AZUL CLARO</div>
+                </div>
+                <div class="color-item">
+                    <div class="color-circle" style="background: #0d4d38;"></div>
+                    <div class="color-label">FATO EM TONS DE VERDE</div>
+                </div>
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down" style="color:#333;"></i>
+            </div>
+        </div>
+
+        <!-- TELA 12 (Homens - Cores Recomendadas) -->
+        <div class="screen screen-dress" data-index="11">
+            <div>
+                <div class="dress-subtitle" style="font-size: 20px; font-weight: 700; margin-top: 10px;">CORES RECOMENDADAS</div>
+            </div>
+            <div class="color-list" style="gap: 8px;">
+                <div class="color-item"><div class="color-circle" style="background: #d9c3a9;"></div><div class="color-label">FATO BEGE CLARO</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #c7b299;"></div><div class="color-label">FATO AREIA (SAND)</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #8c969d;"></div><div class="color-label">FATO CINZA CLARO</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #34434f;"></div><div class="color-label">FATO CINZA ESCURO</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #5c3a1e;"></div><div class="color-label">FATO CASTANHO CACAU</div></div>
+                <div class="color-item"><div class="color-circle" style="background: #19335e;"></div><div class="color-label">FATO AZUL MARINHO</div></div>
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down" style="color:#333;"></i>
+            </div>
+        </div>
+
+        
+        <!-- TELA DE PRESENTES -->
+        <div class="screen screen-gift" data-index="12">
+            <div style="text-align: center; padding-top: 10px;">
+                <img src="https://img.icons8.com/color/96/wedding-rings.png" style="width: 45px; display:block; margin: 0 auto;" alt="Alianças">
+                <div style="font-size: 26px; font-family: 'Playfair Display', serif; color: #f4cf83; margin-top: 10px;">Lista de Presentes</div>
+            </div>
+            <div style="background: rgba(255, 255, 255, 0.08) ; border: 1px solid rgba(244, 207, 131, 0.3); padding: 20px 15px; border-radius: 15px; backdrop-filter: blur(5px); margin: auto 0; text-align: center; ">
+                <p style="font-size: 14px; line-height: 1.6; color: #f0f0f0; margin-bottom: 15px;">
+                    A sua presença é o presente mais valioso que poderíamos receber.
+                </p>
+                <p style="font-size: 13px; line-height: 1.6; color: #dedede;">
+                    No entanto, caso deseje oferecer-nos uma lembrança, convidamo-lo(a) a contactar a organização do evento, que terá todo o gosto em partilhar a nossa lista de preferências.
+                </p>
+            </div>
+            <div>
+                <a href="https://wa.me/258874460778?text=Olá! Espero que esteja bem. Gostaria de obter mais informações sobre a lista de preferências de presentes para o casamento  de Sueifa & Ronaldo. Poderá, por gentileza, partilhar os detalhes?" target="_blank" class="btn-whatsapp" style="display: block; text-align: center; text-decoration: none; padding: 14px; border-radius: 25px; background-color: #25d366; color: #fff; font-weight: 600; font-size: 13px; margin-bottom: 10px;">
+                    <i class="fab fa-whatsapp"></i> Contactar a Organização via WhatsApp
+                </a>
+            </div>
+            <div class="footer-nav" onclick="nextScreen()">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- TELA 13 (Contagem Regressiva e Fim) -->
+        <div class="screen screen-13" data-index="12">
+            <div style="text-align: center; padding-top: 10px;">
+                <img src="https://img.icons8.com/color/96/wedding-rings.png" style="width: 45px; display:block; margin: 0 auto;" alt="Alianças">
+                <div style="font-size: 16px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px;" class="gold-text"></div>
+            </div>
+            <div class="countdown-container">
+                <div class="countdown-box">
+                    <div class="countdown-number" id="days">155</div>
+                    <div class="countdown-label">Dias</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="hours">20</div>
+                    <div class="countdown-label">Horas</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="minutes">39</div>
+                    <div class="countdown-label">Minutos</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="seconds">51</div>
+                    <div class="countdown-label">Segundos</div>
+                </div>
+            </div>
+            <div class="final-message-box">
+                A nossa jornada rumo ao "para sempre" está prestes a começar!
+            </div>
+            <div class="final-footer-text">
+                * Se recebeu este convite significa que é nosso convidado de honra e a sua presença é importante para nós. Mal podemos esperar para celebrar este dia convosco.
+            </div>
+            <div class="footer-nav" onclick="goToScreen(0)" title="Voltar ao início">
+                <i class="fas fa-redo" style="font-size: 16px;"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentScreen = 0;
+        let isOpen = false; // Bloqueia avanço até clicar em ABRIR
+        const screens = document.querySelectorAll('.screen');
+        const totalScreens = screens.length;
+
+        function showScreen(index) {
+            // Se tentar avançar a partir da tela 0 sem clicar em ABRIR, impede
+            if (index > 0 && !isOpen) {
+                return;
+            }
+            screens.forEach((screen, i) => {
+                screen.classList.remove('active');
+                if (i === index) {
+                    screen.classList.add('active');
+                }
+            });
+            currentScreen = index;
+            // Scroll topo da tela ativa
+            screens[currentScreen].scrollTop = 0;
+        }
+
+        function nextScreen() {
+            if (currentScreen === 0 && !isOpen) {
+                openInvite();
+                return;
+            }
+            let next = (currentScreen + 1) % totalScreens;
+            showScreen(next);
+        }
+
+        function goToScreen(index) {
+            if (index > 0 && !isOpen) return;
+            showScreen(index);
+        }
+
+        // Função específica para o botão ABRIR
+        function openInvite() {
+            isOpen = true;
+            // Tocar música automaticamente
+            if (!isPlaying) {
+                bgMusic.play().then(() => {
+                    musicControl.classList.add('playing');
+                    musicIcon.className = 'fas fa-volume-up';
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log("Erro ao reproduzir áudio:", e);
+                });
+            }
+            // Avançar para a tela 2
+            showScreen(1);
+        }
+
+        // Suporte a gestos de Swipe (Touch) em dispositivos móveis
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        const container = document.getElementById('invite-container');
+
+        container.addEventListener('touchstart', e => {
+            touchStartY = e.changedTouches[0].screenY;
+        }, false);
+
+        container.addEventListener('touchend', e => {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndY < touchStartY - 50) {
+                // Swipe para cima (Avançar)
+                if (currentScreen === 0 && !isOpen) {
+                    openInvite();
+                    return;
+                }
+                if (currentScreen < totalScreens - 1) {
+                    nextScreen();
+                }
+            }
+            if (touchEndY > touchStartY + 50) {
+                // Swipe para baixo (Voltar)
+                if (currentScreen > 0) {
+                    // Se estiver na tela 1 e quiser voltar para 0, permitimos ou mantemos? O usuário disse: "sem clicar em abrir nao deve ser possivel ter acesso a pagina seguinte". Voltar para 0 pode, mas avançar não.
+                    showScreen(currentScreen - 1);
+                }
+            }
+        }
+
+        // Sistema de Música de Fundo
+        let isPlaying = false;
+        const bgMusic = document.getElementById('bg-music');
+        const musicControl = document.getElementById('music-control');
+        const musicIcon = document.getElementById('music-icon');
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicControl.classList.remove('playing');
+                musicIcon.className = 'fas fa-music';
+                isPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    musicControl.classList.add('playing');
+                    musicIcon.className = 'fas fa-volume-up';
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log("Erro ao reproduzir áudio:", e);
+                });
+            }
+        }
+
+
+
+        // Envio do RSVP para o WhatsApp
+        function sendWhatsAppRSVP() {
+            const name = document.getElementById('rsvp-name').value.trim();
+            const phone = document.getElementById('rsvp-phone').value.trim();
+            const status = document.getElementById('rsvp-status').value;
+
+            if (!name) {
+                alert('Por favor, insira o seu nome completo.');
+                document.getElementById('rsvp-name').focus();
+                return;
+            }
+
+            const phoneNumber = "258872817716"; // Substitua pelo número real do noivo/organizador
+            const message = `Olá! Meu nome é *${name}*. Meu contacto é *${phone || 'Não informado'}*.
+Confirmação de Presença:
+*${status}* para o casamento de Michaela & Ronaldo.`;
+            
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        // Contagem Regressiva para 28 de Novembro de 2026
+        const weddingDate = new Date('November 28, 2026 00:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = days;
+                document.getElementById('hours').innerText = hours;
+                document.getElementById('minutes').innerText = minutes;
+                document.getElementById('seconds').innerText = seconds;
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
